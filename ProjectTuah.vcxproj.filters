@@ -21,6 +21,12 @@
     <ClCompile Include="Components.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="EcsEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EcsEngine.hpp">

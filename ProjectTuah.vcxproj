@@ -125,7 +125,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components.hpp" />
+    <ClCompile Include="EcsEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Systems.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridMap.hpp" />
