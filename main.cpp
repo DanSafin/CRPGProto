@@ -6,6 +6,46 @@
 #include <vector>
 #include <cmath>
 
+std::vector<DialogueNode> BuildDialogueTree()
+{
+	std::cout << "\n[STORY] Loading branching dialogue script nodes for Kroni..." << std::endl;
+
+	std::vector<DialogueNode> dialogueTree;
+	dialogueTree.clear();
+
+	dialogueTree.push_back(DialogueNode{
+	"Kroni: State your business traveler. I don't see many royal guards roaming out here.",
+	{
+		{ "1. Ask about chicken and coke.", 1, false },
+		{ "2. [Threaten] Hand over your coin bag!", 2, false },
+		{ "3. Leave peacefully.", -1, false } // Closes dialogue safely
+	}
+		});
+
+	dialogueTree.push_back(DialogueNode{
+	"Kroni: Chicken and coke? Go ask that pirate captain down the road. Though he might try to slice you open instead.",
+	{
+		{ "1. Thanks for the advice. [Leave]", -1, false },
+		{ "2. Actually, I change my mind. Hand over the gold! [Fight]", 2, false }
+	}
+		});
+
+	dialogueTree.push_back(DialogueNode{
+	"Kroni: You think that shiny uniform makes you tough? Pirates! Draw your blades, defend the harbor!",
+	{
+		{ "1. Draw your steel! [Start Combat Encounter]", -1, true }
+	}
+		});
+
+
+	/*dialogueLines.clear();
+	dialogueLines.push_back("Player: Im looking for chicken and coke.");
+	dialogueLines.push_back("npc: Why dont you go ask that guy. Im sure he wont try to kill you.");
+	dialogueLines.push_back("Player: Thanks npc");*/
+
+	return dialogueTree;
+}
+
 int main()
 {
 	const int windowWidth = 800;
@@ -63,12 +103,12 @@ int main()
 	bool isAttackStanceActive = false;
 	Rectangle endTrnBttn = { 10.0f, 540.0f, 140.0f, 40.0f };
 	GameScene activeScene = GameScene::EXPLORATION;
-	std::vector<DialogueNode> dialogueTree;
-	int currentDialogueNodeIndex = 0;
 
 	//DialogueSystem
+	std::vector<DialogueNode> dialogueTree;
 	std::vector<std::string> dialogueLines;
 	size_t currentLineIndex = 0;
+	int currentDialogueNodeIndex = 0;
 
 	auto resetGame = [&]()
 		{
@@ -154,40 +194,7 @@ int main()
 
 					if (dist <= 1)
 					{
-						std::cout << "\n[STORY] Loading branching dialogue script nodes for Kroni..." << std::endl;
-
-						dialogueTree.clear();
-
-						dialogueTree.push_back(DialogueNode{
-						"Kroni: State your business traveler. I don't see many royal guards roaming out here.",
-						{
-							{ "1. Ask about chicken and coke.", 1, false },
-							{ "2. [Threaten] Hand over your coin bag!", 2, false },
-							{ "3. Leave peacefully.", -1, false } // Closes dialogue safely
-						}
-							});
-
-						dialogueTree.push_back(DialogueNode{
-						"Kroni: Chicken and coke? Go ask that pirate captain down the road. Though he might try to slice you open instead.",
-						{
-							{ "1. Thanks for the advice. [Leave]", -1, false },
-							{ "2. Actually, I change my mind. Hand over the gold! [Fight]", 2, false }
-						}
-							});
-
-						dialogueTree.push_back(DialogueNode{
-						"Kroni: You think that shiny uniform makes you tough? Pirates! Draw your blades, defend the harbor!",
-						{
-							{ "1. Draw your steel! [Start Combat Encounter]", -1, true } 
-						}
-							});
-
-
-						/*dialogueLines.clear();
-						dialogueLines.push_back("Player: Im looking for chicken and coke.");
-						dialogueLines.push_back("npc: Why dont you go ask that guy. Im sure he wont try to kill you.");
-						dialogueLines.push_back("Player: Thanks npc");*/
-						
+						dialogueTree = BuildDialogueTree();
 						currentDialogueNodeIndex = 0;
 						activeScene = GameScene::DIALOGUE;
 					}
